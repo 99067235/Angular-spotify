@@ -4,10 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './pages/home/home.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    NavMenuComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

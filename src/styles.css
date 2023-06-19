@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+button:hover{
+  background-color: darkgreen;
+  animation: button-scale 0.3s forwards;
+}
+
+@keyframes button-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+button:not(:hover) {
+  animation: button-scale-down 0.3s forwards;
+}
+
+@keyframes button-scale-down {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
