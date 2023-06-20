@@ -7,3 +7,10 @@ nav button {
 .logo {
   width: 50px;
 }
+#movableDiv {
+  height: 100px;
+  float: right;
+}
+#likeButton {
+  float: right;
+}

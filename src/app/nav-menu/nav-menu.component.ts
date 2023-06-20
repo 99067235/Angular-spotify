@@ -6,10 +6,14 @@ import Swal from 'sweetalert2';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  movableButtonStyles: any = {
+    position: 'relative',
+    left: '0',
+    transition: 'left 0.01s'
+  };
   clickCounter = 0;
   gifUrls = ['https://media.tenor.com/O0HXLFkP5VcAAAAi/among-us.gif',
     'https://media.tenor.com/XTsLyyT2KRgAAAAC/thumbs-up-simon-cowell.gif',
-  'https://media.tenor.com/W-eyGAvIXBoAAAAS/system32-among-us.gif',
   'https://media.tenor.com/2kjvgH8AC5EAAAAd/your-mom-doing-your-mom.gif',
   'https://media.tenor.com/YcXDra0MAnoAAAAM/bobux-0bobux.gif']
   secretEvent() {
