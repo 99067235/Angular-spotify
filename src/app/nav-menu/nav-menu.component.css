@@ -14,3 +14,15 @@ nav button {
 #likeButton {
   float: right;
 }
+#logoImage{
+  animation: button-scale 2s forwards;
+}
+
+@keyframes button-scale {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(1000px);
+  }
+}
