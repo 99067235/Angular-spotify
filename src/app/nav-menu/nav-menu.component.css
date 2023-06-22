@@ -14,15 +14,27 @@ nav button {
 #likeButton {
   float: right;
 }
-#logoImage{
-  animation: button-scale 2s forwards;
+#logoImageDrop{
+  animation: logo-drop 2s forwards;
 }
 
-@keyframes button-scale {
+@keyframes logo-drop {
   0% {
     transform: translateY(0px);
   }
   100% {
     transform: translateY(1000px);
+  }
+}
+#logoImageReturn{
+  animation: logo-return 2s forwards;
+}
+
+@keyframes logo-return {
+  0% {
+    transform: translateY(1000px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }
