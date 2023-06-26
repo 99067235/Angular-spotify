@@ -1,5 +1,6 @@
 <nav>
   <img id="logo" src="assets/images/logo.png" alt="" class="logo" (click)="secretEvent()">
+<!--  <button class="btn btn-outline-success" (click)="authenticateWithSpotify()">Login</button>-->
   <button class="btn btn-outline-success" routerLink="/home">Home</button>
   <div id="movableDiv" (mouseenter)="this.movableButtonStyles.left = '-100px'" (mouseleave)="this.movableButtonStyles.left = '0'">
     <button class="btn btn-outline-success" [ngStyle]="movableButtonStyles"><i class="fa fa-solid fa-thumbs-down"></i></button>

@@ -1,4 +1,9 @@
 export const environment = {
-  apiUrl: 'http://127.0.0.1:5000',
-  production: false
+  spotifyAuthConfig: {
+    clientId: 'YOUR_CLIENT_ID',
+    redirectUri: 'http://localhost:4200/callback',
+    responseType: 'token',
+    scope: 'user-read-private user-read-email',
+    showDebugInformation: true,
+  },
 };

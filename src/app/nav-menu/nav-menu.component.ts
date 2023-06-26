@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
-import Swal from 'sweetalert2';
+import {SpotifyService} from "../services/spotify.service";
+
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  constructor(private spotifyService: SpotifyService) {
+  }
   movableButtonStyles: any = {
     position: 'relative',
     left: '0',
     transition: 'left'
   };
   clickCounter = 0;
+
   secretEvent() {
     this.clickCounter += 1;
     if (this.clickCounter === 5) {
@@ -29,4 +33,5 @@ export class NavMenuComponent {
       logoImage.id = 'logoImageReturn';
     }
   }
+
 }

@@ -7,13 +7,16 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './pages/home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-
+import {CallbackComponent} from "./pages/callback/callback.component";
+import { ProfileComponent } from './pages/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavMenuComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CallbackComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
