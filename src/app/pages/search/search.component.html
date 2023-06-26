@@ -1,4 +1,6 @@
 <div id="searchResults" *ngFor="let result of searchResults">
-  <img class="resultPicture" [src]="result.album.images[0].url" alt="Image">
-  <div id="result">{{result.name}}</div>
+  <section id="result">
+    <img class="resultPicture" [src]="result.album.images[0].url" alt="Image">
+    <div id="resultName">{{result.name}}</div>
+  </section>
 </div>

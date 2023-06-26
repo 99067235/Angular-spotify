@@ -1,8 +1,15 @@
 <section class="search">
-  <input type="text" id="searchBox"><button class="btn btn-outline-success" (click)="searchForContent()">Search</button>
+  <input type="text" id="searchBox"><button class="btn btn-outline-success" (click)="search()">Search</button>
 </section>
 <img [src]="profilePictureUrl" alt="Profile picture">
 <section id="userInformation">
   <p [textContent]="this.displayName"></p>
   <p>Country: {{this.country}}</p>
 </section>
+<h2>Featured</h2>
+<div id="featured" *ngFor="let result of featured">
+  <section id="result">
+    <img class="resultPicture" [src]="result.album.images[0].url" alt="Image">
+    <div id="resultName">{{result.name}}</div>
+  </section>
+</div>

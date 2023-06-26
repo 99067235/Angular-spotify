@@ -1,0 +1,12 @@
+#searchResults, #featured {
+  display: flex;
+  justify-content: left;
+}
+#result {
+  display: flex;
+  justify-content: left;
+}
+.resultPicture {
+  width: 100px;
+  height: 100px;
+}
