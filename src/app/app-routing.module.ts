@@ -6,11 +6,13 @@ import {CallbackComponent} from "./pages/callback/callback.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {AuthGuard} from "./auth/guards/auth.guard";
 import {ProfileComponent} from "./pages/profile/profile.component";
+import {SearchComponent} from "./pages/search/search.component";
 const routes: Routes = [
   {path: "home", component: HomeComponent, canActivate: [AuthGuard]},
   {path: "profile", component: ProfileComponent},
   {path: "login", component: LoginComponent},
   {path: "callback", component: CallbackComponent},
+  {path: "search", component: SearchComponent},
   {path: "", redirectTo: "/home", pathMatch: "full"},
   {path: "**", component: PageNotFoundComponent}
 ];

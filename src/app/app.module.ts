@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import {CallbackComponent} from "./pages/callback/callback.component";
 import { ProfileComponent } from './pages/profile/profile.component';
+import { SearchComponent } from './pages/search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,14 +17,15 @@ import { ProfileComponent } from './pages/profile/profile.component';
     NavMenuComponent,
     PageNotFoundComponent,
     CallbackComponent,
-    ProfileComponent
+    ProfileComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [HttpClientModule, HttpClient],
+  providers: [HttpClientModule, HttpClient, ProfileComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
