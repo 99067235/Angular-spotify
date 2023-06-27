@@ -13,8 +13,7 @@ export class PlaylistsComponent {
   protected playlistNames: any;
   ngOnInit() {
     this.spotifyService.getPlaylists().subscribe(response => {
-      this.playlistNames = response.items.map((playlist: { name: any; id: any; }) => ({ name: playlist.name, id: playlist.id }));
-      console.log(this.playlistNames);
+      this.playlistNames = response.items.map((playlist: { name: any; id: any; images: any; }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url }));
     })
   }
 

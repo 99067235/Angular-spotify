@@ -1,3 +1,6 @@
 <div *ngFor="let playlist of playlistNames">
-  <button class="btn btn-outline-info" (click)="openPlaylist(playlist.id)" [textContent]="playlist.name"></button>
+  <section id="result">
+    <img class="playlistImage" [src]="playlist.image" alt="" (click)="openPlaylist(playlist.id)">
+    <p [textContent]="playlist.name"></p>
+  </section>
 </div>

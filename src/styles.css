@@ -18,3 +18,8 @@
 .playlistActionsSection {
   margin-left: auto;
 }
+.playlistImage {
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}

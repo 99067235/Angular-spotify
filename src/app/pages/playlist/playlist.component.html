@@ -1,0 +1,11 @@
+<div id="featured" *ngFor="let song of playlistContent">
+  <section id="result">
+    <img class="resultPicture" [src]="song.track.album.images[0].url" alt="">
+    <p [textContent]="song.track.name"></p>
+  </section>
+  <section class="playlistActionsSection">
+    <button class="btn btn-outline-info playlistActionButton" (click)="getSongDetails(song.track.uri)"><i class="fa fa-info"></i></button>
+    <button class="btn btn-outline-success playlistActionButton" (click)="addTrackToPlaylist(song.track.uri)"><i class="fa fa-plus"></i></button>
+    <button class="btn btn-outline-danger playlistActionButton" (click)="deleteTrackFromPlaylist(song.track.uri)"><i class="fa fa-minus"></i></button>
+  </section>
+</div>

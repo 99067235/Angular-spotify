@@ -73,7 +73,7 @@ export class ProfileComponent {
   }
 
   addTrackToPlaylist(trackUri: string) {
-    this.spotifyService.selectPlaylist(trackUri).then(playlistId => {
+    this.spotifyService.selectPlaylist().then(playlistId => {
       if (playlistId !== 'null') {
         this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(response => {
           this.notification.success('Song successfully added')
@@ -83,33 +83,11 @@ export class ProfileComponent {
   }
 
   deleteTrackFromPlaylist(trackUri: string) {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
-    });
-    const body = {tracks: [{uri: trackUri}]};
-    const options = {headers, body};
-    this.spotifyService.selectPlaylist(trackUri).then(playlistId => {
-      if (playlistId !== 'null') {
-        this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
-          .subscribe(
-            response => {
-              this.notification.success('Song successfully deleted')
-            },
-            error => {
-              this.notification.error('Something went wrong')
-            }
-          );
-      }
-    })
+    this.spotifyService.deleteTrackFromPlaylist(trackUri)
   }
 
   getSongDetails(trackUri: string) {
-    this.spotifyService.getSongDetails(trackUri).subscribe(data => {
-      Swal.fire({
-        title: 'Song details',
-        html: '<ul><li>Artist: ' + data.artists[0].name + '</li><li>Album: ' + data.album.name + '</li><li>Track URL: ' + data.external_urls.spotify + '</li><li>Duration: ' + data.duration_ms + '</li></ul>'
-      })
-    })
+    this.spotifyService.getSongDetails(trackUri)
   }
 
 }

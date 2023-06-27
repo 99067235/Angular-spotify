@@ -3,6 +3,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 import {HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
 import Swal from "sweetalert2";
+import {NotificationService} from "./notification.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ import Swal from "sweetalert2";
 export class SpotifyService {
   private spotifyApi: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private notification: NotificationService) {
     this.spotifyApi = new SpotifyWebApi();
   }
 
@@ -24,6 +25,27 @@ export class SpotifyService {
     return this.http.post<any>(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, body, { headers })
   }
 
+  deleteTrackFromPlaylist(trackUri: string) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+    });
+    const body = {tracks: [{uri: trackUri}]};
+    const options = {headers, body};
+    this.selectPlaylist().then(playlistId => {
+      if (playlistId !== 'null') {
+        this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
+          .subscribe(
+            response => {
+              this.notification.success('Song successfully deleted')
+            },
+            error => {
+              this.notification.error('Something went wrong')
+            }
+          );
+      }
+    })
+  }
+
   getPlaylists() {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
@@ -31,7 +53,7 @@ export class SpotifyService {
     return this.http.get<any>('https://api.spotify.com/v1/me/playlists', { headers })
   }
 
-  selectPlaylist(trackUri: string): Promise<string | boolean> {
+  selectPlaylist(): Promise<string | boolean> {
     return new Promise((resolve, reject) => {
       this.getPlaylists().subscribe(response => {
         Swal.fire({
@@ -73,7 +95,12 @@ export class SpotifyService {
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
     });
     trackUri = trackUri.split(':')[2]
-    return this.http.get<any>(`https://api.spotify.com/v1/tracks/${trackUri}`, { headers })
+    this.http.get<any>(`https://api.spotify.com/v1/tracks/${trackUri}`, { headers }).subscribe(data => {
+      Swal.fire({
+        title: 'Song details',
+        html: '<ul><li>Artist: ' + data.artists[0].name + '</li><li>Album: ' + data.album.name + '</li><li>Track URL: ' + data.external_urls.spotify + '</li><li>Duration: ' + data.duration_ms + '</li></ul>'
+      })
+    })
   }
 
 
