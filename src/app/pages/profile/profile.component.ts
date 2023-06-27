@@ -28,11 +28,6 @@ export class ProfileComponent {
       this.profilePictureUrl = userData['images'][0]['url'];
       this.country = userData['country'];
     });
-
-    this.http.get<any>('https://api.spotify.com/v1/me/playlists', {headers}).subscribe(response => {
-      this.playlists = response.items
-      console.log(this.playlists);
-    })
     this.getFeaturedContent();
   }
 
@@ -76,34 +71,16 @@ export class ProfileComponent {
     }
   }
 
-  createPlaylistsDropdown(trackUri: string) {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
-    });
-    this.http.get<any>('https://api.spotify.com/v1/me/playlists', { headers }).subscribe(response => {
-      Swal.fire({
-        html: '<select id="playlistsDropdown"></select>'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const playlistId = (document.getElementById('playlistsDropdown') as HTMLSelectElement).value;
-          this.spotifyService.addTrackToPlaylist(trackUri, playlistId).subscribe(response => {
-            Swal.fire({
-              text: 'Success'
-            })
+  addTrackToPlaylist(trackUri: string) {
+    this.spotifyService.selectPlaylist(trackUri).then(playlistId => {
+      if (playlistId !== 'null') {
+        this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(response => {
+          Swal.fire({
+            text: 'Song successfully added',
+            toast: true,
+            position: 'bottom-right'
           })
-        }
-      })
-      let playlists = response.items;
-      playlists = playlists.map((playlist: { name: any; id: any; }) => ({ name: playlist.name, id: playlist.id }));
-      let playlistsDropdown = (document.getElementById('playlistsDropdown') as HTMLSelectElement);
-      if (playlistsDropdown !== null) {
-        playlistsDropdown.innerHTML = '';
-      }
-      for (var i = 0; i < playlists.length; i++) {
-        var option = document.createElement("option");
-        option.text = playlists[i].name;
-        option.value = playlists[i].id;
-        playlistsDropdown.add(option);
+        })
       }
     })
   }
@@ -112,30 +89,29 @@ export class ProfileComponent {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
     });
-    const body = {
-      tracks: [
-        {
-          uri: trackUri
-        }
-      ]
-    };
-
-    const options = {
-      headers,
-      body
-    };
-
-    const playlistId = '5yo3kc6R8c52l8vxNtD1pR'
-
-    this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
-      .subscribe(
-        response => {
-          console.log('Track deleted from playlist successfully!', response);
-        },
-        error => {
-          console.error('Error deleting track from playlist:', error);
-        }
-      );
+    const body = {tracks: [{uri: trackUri}]};
+    const options = {headers, body};
+    this.spotifyService.selectPlaylist(trackUri).then(playlistId => {
+      if (playlistId !== 'null') {
+        this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
+          .subscribe(
+            response => {
+              Swal.fire({
+                text: 'Song successfully deleted',
+                toast: true,
+                position: 'bottom-right'
+              })
+            },
+            error => {
+              Swal.fire({
+                text: 'Something went wrong',
+                toast: true,
+                position: 'bottom-right',
+              })
+            }
+          );
+      }
+    })
   }
 
 }
