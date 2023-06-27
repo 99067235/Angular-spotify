@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SpotifyService} from "../../services/spotify.service";
 import {NotificationService} from "../../services/notification.service";
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -99,6 +100,15 @@ export class ProfileComponent {
             }
           );
       }
+    })
+  }
+
+  getSongDetails(trackUri: string) {
+    this.spotifyService.getSongDetails(trackUri).subscribe(data => {
+      Swal.fire({
+        title: 'Song details',
+        html: '<ul><li>Artist: ' + data.artists[0].name + '</li><li>Album: ' + data.album.name + '</li><li>Track URL: ' + data.external_urls.spotify + '</li><li>Duration: ' + data.duration_ms + '</li></ul>'
+      })
     })
   }
 
