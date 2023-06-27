@@ -76,9 +76,35 @@ export class ProfileComponent {
     }
   }
 
-  addTrackToPlaylist(trackUri: string, playlistId: string) {
-    this.spotifyService.addTrackToPlaylist(trackUri, playlistId).subscribe(() => {
-      console.log('success')
+  createPlaylistsDropdown(trackUri: string) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+    });
+    this.http.get<any>('https://api.spotify.com/v1/me/playlists', { headers }).subscribe(response => {
+      Swal.fire({
+        html: '<select id="playlistsDropdown"></select>'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const playlistId = (document.getElementById('playlistsDropdown') as HTMLSelectElement).value;
+          this.spotifyService.addTrackToPlaylist(trackUri, playlistId).subscribe(response => {
+            Swal.fire({
+              text: 'Success'
+            })
+          })
+        }
+      })
+      let playlists = response.items;
+      playlists = playlists.map((playlist: { name: any; id: any; }) => ({ name: playlist.name, id: playlist.id }));
+      let playlistsDropdown = (document.getElementById('playlistsDropdown') as HTMLSelectElement);
+      if (playlistsDropdown !== null) {
+        playlistsDropdown.innerHTML = '';
+      }
+      for (var i = 0; i < playlists.length; i++) {
+        var option = document.createElement("option");
+        option.text = playlists[i].name;
+        option.value = playlists[i].id;
+        playlistsDropdown.add(option);
+      }
     })
   }
 
@@ -111,26 +137,5 @@ export class ProfileComponent {
         }
       );
   }
-
-  // addToPlaylist(song: any) {
-  //   const headers = new HttpHeaders({
-  //     'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
-  //   });
-  //   const playlistId = "5yo3kc6R8c52l8vxNtD1pR"
-  //   const trackUri = song.uri
-  //   const body = {
-  //     uris: [trackUri]
-  //   };
-  //
-  //   this.http.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, body, { headers })
-  //     .subscribe(
-  //       response => {
-  //         console.log('Song added to playlist successfully!', response);
-  //       },
-  //       error => {
-  //         console.error('Error adding song to playlist:', error);
-  //       }
-  //     );
-  // }
 
 }
