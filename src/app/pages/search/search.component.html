@@ -1,6 +1,10 @@
-<div id="searchResults" *ngFor="let result of searchResults">
+<div id="searchResults" *ngFor="let song of searchResults">
   <section id="result">
-    <img class="resultPicture" [src]="result.album.images[0].url" alt="Image">
-    <div id="resultName">{{result.name}}</div>
+    <img class="resultPicture" [src]="song.album.images[0].url" alt="Image">
+    <div id="resultName">{{song.name}}</div>
+  </section>
+  <section class="playlistActionsSection">
+    <button class="btn btn-outline-success playlistActionButton" (click)="addTrackToPlaylist(song.uri)"><i class="fa fa-plus"></i></button>
+    <button class="btn btn-outline-danger playlistActionButton" (click)="deleteTrackFromPlaylist(song.uri)"><i class="fa fa-minus"></i></button>
   </section>
 </div>

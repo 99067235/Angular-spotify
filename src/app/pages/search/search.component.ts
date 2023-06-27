@@ -6,7 +6,7 @@ import {ProfileComponent} from "../profile/profile.component";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  constructor() {
+  constructor(public profileComponent: ProfileComponent) {
   }
   protected searchResults: any;
   ngOnInit() {
@@ -16,4 +16,11 @@ export class SearchComponent {
     }
   }
 
+  addTrackToPlaylist(songUri: string) {
+    this.profileComponent.addTrackToPlaylist(songUri)
+  }
+
+  deleteTrackFromPlaylist(songUri: string) {
+    this.profileComponent.deleteTrackFromPlaylist(songUri)
+  }
 }
