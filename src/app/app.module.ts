@@ -10,6 +10,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import {CallbackComponent} from "./pages/callback/callback.component";
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
+import { PlaylistsComponent } from './pages/playlists/playlists.component';
+import { PlaylistComponent } from './pages/playlist/playlist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,14 +20,16 @@ import { SearchComponent } from './pages/search/search.component';
     PageNotFoundComponent,
     CallbackComponent,
     ProfileComponent,
-    SearchComponent
+    SearchComponent,
+    PlaylistsComponent,
+    PlaylistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [HttpClientModule, HttpClient, ProfileComponent],
+  providers: [HttpClientModule, HttpClient, ProfileComponent, PlaylistsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

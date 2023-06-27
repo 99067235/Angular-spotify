@@ -7,12 +7,16 @@ import {LoginComponent} from "./pages/login/login.component";
 import {AuthGuard} from "./auth/guards/auth.guard";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {SearchComponent} from "./pages/search/search.component";
+import {PlaylistsComponent} from "./pages/playlists/playlists.component";
+import {PlaylistComponent} from "./pages/playlist/playlist.component";
 const routes: Routes = [
   {path: "home", component: HomeComponent, canActivate: [AuthGuard]},
   {path: "profile", component: ProfileComponent},
   {path: "login", component: LoginComponent},
   {path: "callback", component: CallbackComponent},
   {path: "search", component: SearchComponent},
+  {path: "playlists", component: PlaylistsComponent},
+  {path: "playlist", component: PlaylistComponent},
   {path: "", redirectTo: "/home", pathMatch: "full"},
   {path: "**", component: PageNotFoundComponent}
 ];

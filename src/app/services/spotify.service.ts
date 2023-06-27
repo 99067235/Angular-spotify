@@ -61,6 +61,13 @@ export class SpotifyService {
     });
   }
 
+  getPlaylistContent(playlistId: string) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+    });
+    return this.http.get<any>(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers })
+  }
+
   getSongDetails(trackUri: string) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
