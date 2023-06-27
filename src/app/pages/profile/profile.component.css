@@ -1,4 +1,7 @@
 .search {
   float: right;
 }
-
+#featured {
+  display: flex;
+  align-items: center;
+}

@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {SpotifyService} from "../../services/spotify.service";
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private spotifyService: SpotifyService) {
   }
   protected userData: any;
   protected displayName: any;
@@ -15,17 +17,22 @@ export class ProfileComponent {
   protected country: any;
   public searchResults: any;
   protected featured: any;
+  protected playlists: any;
   ngOnInit() {
-    this.http.get<any>('https://api.spotify.com/v1/me', {
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
-      }
-    }).subscribe(userData => {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+    });
+    this.http.get<any>('https://api.spotify.com/v1/me', {headers}).subscribe(userData => {
       this.userData = userData;
       this.displayName = userData['display_name'];
       this.profilePictureUrl = userData['images'][0]['url'];
       this.country = userData['country'];
     });
+
+    this.http.get<any>('https://api.spotify.com/v1/me/playlists', {headers}).subscribe(response => {
+      this.playlists = response.items
+      console.log(this.playlists);
+    })
     this.getFeaturedContent();
   }
 
@@ -68,5 +75,62 @@ export class ProfileComponent {
       });
     }
   }
+
+  addTrackToPlaylist(trackUri: string, playlistId: string) {
+    this.spotifyService.addTrackToPlaylist(trackUri, playlistId).subscribe(() => {
+      console.log('success')
+    })
+  }
+
+  deleteTrackFromPlaylist(trackUri: string) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+    });
+    const body = {
+      tracks: [
+        {
+          uri: trackUri
+        }
+      ]
+    };
+
+    const options = {
+      headers,
+      body
+    };
+
+    const playlistId = '5yo3kc6R8c52l8vxNtD1pR'
+
+    this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
+      .subscribe(
+        response => {
+          console.log('Track deleted from playlist successfully!', response);
+        },
+        error => {
+          console.error('Error deleting track from playlist:', error);
+        }
+      );
+  }
+
+  // addToPlaylist(song: any) {
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
+  //   });
+  //   const playlistId = "5yo3kc6R8c52l8vxNtD1pR"
+  //   const trackUri = song.uri
+  //   const body = {
+  //     uris: [trackUri]
+  //   };
+  //
+  //   this.http.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, body, { headers })
+  //     .subscribe(
+  //       response => {
+  //         console.log('Song added to playlist successfully!', response);
+  //       },
+  //       error => {
+  //         console.error('Error adding song to playlist:', error);
+  //       }
+  //     );
+  // }
 
 }

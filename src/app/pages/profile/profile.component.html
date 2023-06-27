@@ -7,9 +7,13 @@
   <p>Country: {{this.country}}</p>
 </section>
 <h2>Featured</h2>
-<div id="featured" *ngFor="let result of featured">
+<div id="featured" *ngFor="let song of featured">
   <section id="result">
-    <img class="resultPicture" [src]="result.album.images[0].url" alt="Image">
-    <div id="resultName">{{result.name}}</div>
+    <img class="resultPicture" [src]="song.album.images[0].url" alt="Image">
+    <div id="resultName">{{song.name}}</div>
+  </section>
+  <section class="playlistActionsSection">
+    <button class="btn btn-outline-success playlistActionButton" (click)="addTrackToPlaylist(song.uri, '5yo3kc6R8c52l8vxNtD1pR')"><i class="fa fa-plus"></i></button>
+    <button class="btn btn-outline-danger playlistActionButton" (click)="deleteTrackFromPlaylist(song.uri)"><i class="fa fa-minus"></i></button>
   </section>
 </div>
