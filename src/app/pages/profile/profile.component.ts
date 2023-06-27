@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SpotifyService} from "../../services/spotify.service";
-import Swal from 'sweetalert2'
+import {NotificationService} from "../../services/notification.service";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  constructor(private http: HttpClient, private router: Router, private spotifyService: SpotifyService) {
+  constructor(private http: HttpClient, private router: Router, private spotifyService: SpotifyService, private notification: NotificationService) {
   }
   protected userData: any;
   protected displayName: any;
@@ -75,11 +75,7 @@ export class ProfileComponent {
     this.spotifyService.selectPlaylist(trackUri).then(playlistId => {
       if (playlistId !== 'null') {
         this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(response => {
-          Swal.fire({
-            text: 'Song successfully added',
-            toast: true,
-            position: 'bottom-right'
-          })
+          this.notification.success('Song successfully added')
         })
       }
     })
@@ -96,18 +92,10 @@ export class ProfileComponent {
         this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
           .subscribe(
             response => {
-              Swal.fire({
-                text: 'Song successfully deleted',
-                toast: true,
-                position: 'bottom-right'
-              })
+              this.notification.success('Song successfully deleted')
             },
             error => {
-              Swal.fire({
-                text: 'Something went wrong',
-                toast: true,
-                position: 'bottom-right',
-              })
+              this.notification.error('Something went wrong')
             }
           );
       }
