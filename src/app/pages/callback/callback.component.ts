@@ -14,7 +14,7 @@ export class CallbackComponent {
   ngOnInit() {
     const accessToken = new URLSearchParams(window.location.hash.substr(1)).get('access_token');
     this.spotifyService.setAccessToken(accessToken);
-    this.router.navigate(['/profile'])
+    this.router.navigate([localStorage.getItem('redirectUrl')])
   }
 
 }

@@ -56,7 +56,7 @@ export class SpotifyService {
           () => {
             this.notification.success('Song successfully deleted')
             this.getPlaylistContent(playlistId).subscribe(response => {
-              resolve(response.items);
+              resolve(this.convertSongDurationToMin(response.items.map((item: { track: any; }) => item.track)));
             })
           },
           () => {
