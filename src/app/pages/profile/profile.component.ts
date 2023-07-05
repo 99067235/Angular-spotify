@@ -68,8 +68,8 @@ export class ProfileComponent {
         }
       }).subscribe(response => {
         this.searchResults = response.tracks.items;
-        localStorage.setItem('searchResults', JSON.stringify(this.searchResults))
-        this.router.navigate(['/search'])
+        localStorage.setItem('songs', JSON.stringify(this.searchResults))
+        this.router.navigate(['/songs-overview'])
       });
     }
   }
@@ -84,8 +84,8 @@ export class ProfileComponent {
 
   selectGenre(genre: any) {
     this.spotifyService.getSongsFromGenre(genre).subscribe(response => {
-      localStorage.setItem('genre-songs', JSON.stringify(response.tracks))
-      this.router.navigate(['/genre-songs-overview'])
+      localStorage.setItem('songs', JSON.stringify(response.tracks))
+      this.router.navigate(['/songs-overview'])
     })
   }
 

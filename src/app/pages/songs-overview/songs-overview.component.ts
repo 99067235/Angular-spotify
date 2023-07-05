@@ -2,19 +2,21 @@ import { Component } from '@angular/core';
 import {SpotifyService} from "../../services/spotify.service";
 import {NotificationService} from "../../services/notification.service";
 @Component({
-  selector: 'app-genre-songs-overview',
-  templateUrl: './genre-songs-overview.component.html',
-  styleUrls: ['./genre-songs-overview.component.css']
+  selector: 'app-songs-overview',
+  templateUrl: './songs-overview.component.html',
+  styleUrls: ['./songs-overview.component.css']
 })
-export class GenreSongsOverviewComponent {
+export class SongsOverviewComponent {
   constructor(private spotifyService: SpotifyService, private notification: NotificationService) {
   }
-  protected genre_songs: any[] = [];
+  protected songs: any
+
   ngOnInit() {
-    const genre_songs = localStorage.getItem('genre-songs');
-    if (genre_songs !== null) {
-      this.genre_songs = JSON.parse(genre_songs)
+    const songs = localStorage.getItem('songs')
+    if (songs !== null) {
+      this.songs = JSON.parse(songs)
     }
+    console.log(this.songs);
   }
 
   addTrackToPlaylist(trackUri: string) {

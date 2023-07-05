@@ -1,7 +1,7 @@
-<div id="genre_songs_overview" *ngFor="let song of genre_songs">
+<div id="featured" *ngFor="let song of songs">
   <section id="result">
-    <img class="resultPicture" [src]="song.album.images[0].url" alt="Image">
-    <div id="resultName">{{song.name}}</div>
+    <img class="resultPicture" [src]="song.album.images[0].url" alt="">
+    <p [textContent]="song.name"></p>
   </section>
   <section class="playlistActionsSection">
     <button class="btn btn-outline-info playlistActionButton" (click)="getSongDetails(song.uri)"><i class="fa fa-info"></i></button>
