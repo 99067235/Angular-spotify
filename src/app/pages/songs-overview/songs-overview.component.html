@@ -7,5 +7,6 @@
     <button class="btn btn-outline-info playlistActionButton" (click)="getSongDetails(song.uri)"><i class="fa fa-info"></i></button>
     <button class="btn btn-outline-success playlistActionButton" (click)="addTrackToPlaylist(song.uri)"><i class="fa fa-plus"></i></button>
     <button class="btn btn-outline-danger playlistActionButton" (click)="deleteTrackFromPlaylist(song.uri)"><i class="fa fa-minus"></i></button>
+    <p [textContent]="Math.round((song.duration_ms / 60000)) + ' min'"></p>
   </section>
 </div>

@@ -25,7 +25,7 @@ export class PlaylistsComponent {
           ]
         }
       }
-      this.playlistNames = playlists.map((playlist: { name: any; id: any; images: any; }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url }));
+      this.playlistNames = playlists.map((playlist: { name: any; id: any; images: any; duration_min: number }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url, duration_min: 0 }));
     })
   }
 

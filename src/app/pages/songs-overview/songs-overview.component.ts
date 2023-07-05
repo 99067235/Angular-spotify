@@ -41,4 +41,5 @@ export class SongsOverviewComponent {
     this.spotifyService.getSongDetails(trackUri)
   }
 
+  protected readonly Math = Math;
 }

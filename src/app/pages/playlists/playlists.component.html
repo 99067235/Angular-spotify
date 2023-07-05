@@ -3,4 +3,7 @@
     <img class="playlistImage" [src]="playlist.image" alt="" (click)="openPlaylist(playlist.id)">
     <p [textContent]="playlist.name"></p>
   </section>
+  <section class="playlistInfo">
+    <p>{{playlist.duration_min}} min</p>
+  </section>
 </div>
