@@ -26,6 +26,7 @@ export class PlaylistsComponent {
         }
       }
       this.playlistNames = playlists.map((playlist: { name: any; id: any; images: any; duration_min: number }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url, duration_min: 0 }));
+      this.calculateSongDuration()
     })
   }
 
@@ -35,5 +36,16 @@ export class PlaylistsComponent {
       localStorage.setItem('currentPlaylistId', playlistId)
       this.router.navigate(['/playlist'])
     })
+  }
+
+  calculateSongDuration() {
+    for (let playlist in this.playlistNames) {
+      this.spotifyService.getPlaylistContent(this.playlistNames[playlist].id).subscribe(response => {
+        for (const song in response.items) {
+          this.playlistNames[playlist].duration_min += Math.round((response.items[song].track.duration_ms / 60000))
+        }
+        console.log(this.playlistNames)
+      })
+    }
   }
 }
