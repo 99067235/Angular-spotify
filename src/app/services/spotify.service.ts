@@ -25,24 +25,25 @@ export class SpotifyService {
     return this.http.post<any>(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, body, { headers })
   }
 
-  deleteTrackFromPlaylist(trackUri: string) {
+  deleteTrackFromPlaylist(trackUri: string, playlistId: string) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
     });
     const body = {tracks: [{uri: trackUri}]};
     const options = {headers, body};
-    this.selectPlaylist().then(playlistId => {
-      if (playlistId !== 'null') {
-        this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
-          .subscribe(
-            response => {
-              this.notification.success('Song successfully deleted')
-            },
-            error => {
-              this.notification.error('Something went wrong')
-            }
-          );
-      }
+    return new Promise((resolve) => {
+      this.http.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, options)
+        .subscribe(
+          () => {
+            this.notification.success('Song successfully deleted')
+            this.getPlaylistContent(playlistId).subscribe(response => {
+              resolve(response.items);
+            })
+          },
+          () => {
+            this.notification.error('Something went wrong')
+          }
+        );
     })
   }
 

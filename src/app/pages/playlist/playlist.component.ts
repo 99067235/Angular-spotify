@@ -11,12 +11,12 @@ export class PlaylistComponent {
   constructor(private spotifyService: SpotifyService, private notification: NotificationService) {
   }
   protected playlistContent: any
-
+  private playlistId: any;
   ngOnInit() {
     const playlistContent = localStorage.getItem('playlistContent')
     if (playlistContent !== null) {
       this.playlistContent = JSON.parse(playlistContent)
-      console.log(this.playlistContent);
+      this.playlistId = localStorage.getItem('currentPlaylistId')
     }
   }
 
@@ -27,14 +27,17 @@ export class PlaylistComponent {
   addTrackToPlaylist(trackUri: string) {
     this.spotifyService.selectPlaylist().then(playlistId => {
       if (playlistId !== 'null') {
-        this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(response => {
-          this.notification.success('Song successfully added')
+        this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(playlistContent => {
+          this.playlistContent = playlistContent
         })
       }
     })
   }
 
   deleteTrackFromPlaylist(trackUri: string) {
-    this.spotifyService.deleteTrackFromPlaylist(trackUri)
+    this.spotifyService.deleteTrackFromPlaylist(trackUri, this.playlistId).then((playlistContent => {
+      this.playlistContent = playlistContent
+    }))
   }
+
 }

@@ -13,13 +13,26 @@ export class PlaylistsComponent {
   protected playlistNames: any;
   ngOnInit() {
     this.spotifyService.getPlaylists().subscribe(response => {
-      this.playlistNames = response.items.map((playlist: { name: any; id: any; images: any; }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url }));
+      const playlists = response.items;
+      for (const playlist in playlists) {
+        if (playlists[playlist].images.length === 0) {
+          playlists[playlist].images = [
+            {
+              "height": 640,
+              "url": 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png?20200912122019',
+              "width": 640
+            }
+          ]
+        }
+      }
+      this.playlistNames = playlists.map((playlist: { name: any; id: any; images: any; }) => ({ name: playlist.name, id: playlist.id, image: playlist.images[0].url }));
     })
   }
 
   openPlaylist(playlistId: string) {
     this.spotifyService.getPlaylistContent(playlistId).subscribe(response => {
       localStorage.setItem('playlistContent', JSON.stringify(response.items))
+      localStorage.setItem('currentPlaylistId', playlistId)
       this.router.navigate(['/playlist'])
     })
   }

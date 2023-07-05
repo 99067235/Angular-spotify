@@ -83,7 +83,11 @@ export class ProfileComponent {
   }
 
   deleteTrackFromPlaylist(trackUri: string) {
-    this.spotifyService.deleteTrackFromPlaylist(trackUri)
+    this.spotifyService.selectPlaylist().then((playlistId => {
+      if (playlistId !== 'null') {
+        this.spotifyService.deleteTrackFromPlaylist(trackUri, playlistId.toString())
+      }
+    }))
   }
 
   getSongDetails(trackUri: string) {
