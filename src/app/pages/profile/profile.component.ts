@@ -19,6 +19,7 @@ export class ProfileComponent {
   public searchResults: any;
   protected featured: any;
   protected playlists: any;
+  protected genres: any[] = [];
   ngOnInit() {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('spotifyAccessToken')
@@ -30,6 +31,7 @@ export class ProfileComponent {
       this.country = userData['country'];
     });
     this.getFeaturedContent();
+    this.getRandomGenres()
   }
 
   getFeaturedContent() {
@@ -70,6 +72,21 @@ export class ProfileComponent {
         this.router.navigate(['/search'])
       });
     }
+  }
+
+  getRandomGenres() {
+    this.spotifyService.getGenres().subscribe(response => {
+      for (let i = 0; i < 5; i++) {
+        this.genres.push(response.genres[i])
+      }
+    })
+  }
+
+  selectGenre(genre: any) {
+    this.spotifyService.getSongsFromGenre(genre).subscribe(response => {
+      localStorage.setItem('genre-songs', JSON.stringify(response.tracks))
+      this.router.navigate(['/genre-songs-overview'])
+    })
   }
 
   addTrackToPlaylist(trackUri: string) {

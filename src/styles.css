@@ -1,4 +1,4 @@
-#searchResults, #featured {
+#searchResults, #featured, #genre_songs_overview {
   display: flex;
   justify-content: left;
 }

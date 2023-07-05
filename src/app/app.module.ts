@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
 import { PlaylistsComponent } from './pages/playlists/playlists.component';
 import { PlaylistComponent } from './pages/playlist/playlist.component';
+import { GenreSongsOverviewComponent } from './pages/genre-songs-overview/genre-songs-overview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { PlaylistComponent } from './pages/playlist/playlist.component';
     ProfileComponent,
     SearchComponent,
     PlaylistsComponent,
-    PlaylistComponent
+    PlaylistComponent,
+    GenreSongsOverviewComponent
   ],
   imports: [
     BrowserModule,

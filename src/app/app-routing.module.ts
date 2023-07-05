@@ -9,6 +9,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {SearchComponent} from "./pages/search/search.component";
 import {PlaylistsComponent} from "./pages/playlists/playlists.component";
 import {PlaylistComponent} from "./pages/playlist/playlist.component";
+import {GenreSongsOverviewComponent} from "./pages/genre-songs-overview/genre-songs-overview.component";
 const routes: Routes = [
   {path: "home", component: HomeComponent, canActivate: [AuthGuard]},
   {path: "profile", component: ProfileComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: "search", component: SearchComponent},
   {path: "playlists", component: PlaylistsComponent},
   {path: "playlist", component: PlaylistComponent},
+  {path: "genre-songs-overview", component: GenreSongsOverviewComponent},
   {path: "", redirectTo: "/home", pathMatch: "full"},
   {path: "**", component: PageNotFoundComponent}
 ];

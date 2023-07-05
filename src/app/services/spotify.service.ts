@@ -17,6 +17,17 @@ export class SpotifyService {
     this.spotifyApi = new SpotifyWebApi();
   }
 
+  getSongsFromGenre(genre: string) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('spotifyAccessToken'));
+    const params = { seed_genres: genre, limit: '10' };
+    return this.http.get<any>('https://api.spotify.com/v1/recommendations', { headers, params })
+  }
+
+  getGenres() {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('spotifyAccessToken'));
+    return this.http.get<any>('https://api.spotify.com/v1/recommendations/available-genre-seeds', { headers })
+  }
+
   addTrackToPlaylist(trackUri: string, playlistId: string) {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('spotifyAccessToken'));
     const body = {

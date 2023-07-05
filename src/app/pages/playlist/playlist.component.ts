@@ -27,8 +27,7 @@ export class PlaylistComponent {
   addTrackToPlaylist(trackUri: string) {
     this.spotifyService.selectPlaylist().then(playlistId => {
       if (playlistId !== 'null') {
-        this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(playlistContent => {
-          this.playlistContent = playlistContent
+        this.spotifyService.addTrackToPlaylist(trackUri, playlistId.toString()).subscribe(() => {
         })
       }
     })

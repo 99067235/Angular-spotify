@@ -5,3 +5,6 @@
   display: flex;
   align-items: center;
 }
+#genre_overview {
+  margin: 10px;
+}
