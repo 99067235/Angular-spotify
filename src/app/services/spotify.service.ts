@@ -17,6 +17,14 @@ export class SpotifyService {
     this.spotifyApi = new SpotifyWebApi();
   }
 
+  convertSongDurationToMin(playlist: any) {
+    for (const song in playlist) {
+      playlist[song].duration_min = Math.round((playlist[song].duration_ms / 60000))
+      delete playlist[song].duration_ms
+    }
+    return playlist;
+  }
+
   getSongsFromGenre(genre: string) {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('spotifyAccessToken'));
     const params = { seed_genres: genre, limit: '10' };

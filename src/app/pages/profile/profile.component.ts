@@ -51,6 +51,7 @@ export class ProfileComponent {
   fetchSongsFromPlaylist(playlistId: string, headers: HttpHeaders) {
     this.http.get<any>(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers }).subscribe(response => {
       this.featured = response.items.map((item: { track: any; }) => item.track);
+      this.featured = this.spotifyService.convertSongDurationToMin(this.featured);
     });
   }
 

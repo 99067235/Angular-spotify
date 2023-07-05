@@ -32,7 +32,8 @@ export class PlaylistsComponent {
 
   openPlaylist(playlistId: string) {
     this.spotifyService.getPlaylistContent(playlistId).subscribe(response => {
-      localStorage.setItem('playlistContent', JSON.stringify(response.items))
+      const songs = response.items.map((item: { track: any; }) => item.track);
+      localStorage.setItem('playlistContent', JSON.stringify(songs))
       localStorage.setItem('currentPlaylistId', playlistId)
       this.router.navigate(['/playlist'])
     })

@@ -16,8 +16,10 @@ export class PlaylistComponent {
     const playlistContent = localStorage.getItem('playlistContent')
     if (playlistContent !== null) {
       this.playlistContent = JSON.parse(playlistContent)
+      console.log(this.playlistContent);
       this.playlistId = localStorage.getItem('currentPlaylistId')
     }
+    this.playlistContent = this.spotifyService.convertSongDurationToMin(this.playlistContent);
   }
 
   getSongDetails(trackUri: string) {
